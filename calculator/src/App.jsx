@@ -1,10 +1,10 @@
 import './App.css';
-import freeCodeCampLogo from './images/fcc_primary_large.png';
+import Logo from './components/Logo';
 import Button from './components/button';
 import Input from './components/input';
 import ClearButton from './components/ClearButton';
 import { useState } from 'react';
-import { add } from 'lodash';
+import { evaluate } from 'mathjs';
 
 function App() {
 
@@ -14,12 +14,18 @@ function App() {
     setInput(input + val);
   };
 
+  const calculate = () => {
+    if (input) {
+      setInput(evaluate(input))
+    } else {
+      alert("Insert values to operate.")
+    }
+  }
+
   return (
     <div className="App">
       <div className='freeCodeCamp-logo-container'>
-        <img className='freeCodeCamp-logo' 
-          src={ freeCodeCampLogo } 
-          alt='FreeCodeCamp Logo' />
+        <Logo />
       </div>
       <div className='calculator-container'>
         <Input input={ input } />
@@ -42,13 +48,15 @@ function App() {
           <Button setClick = { addInput }>*</Button>
         </div>
         <div className='row'>
-          <Button setClick = { addInput }>=</Button>
+          <Button setClick = { calculate }>=</Button>
           <Button setClick = { addInput }>0</Button>
           <Button setClick = { addInput }>.</Button>
           <Button setClick = { addInput }>/</Button>
         </div>
         <div className='row'>
-          <ClearButton setClear={() => setInput('')}>Clear</ClearButton>
+          <ClearButton setClear={() => setInput('')}>
+            Clear
+          </ClearButton>
         </div>
       </div>
     </div>
